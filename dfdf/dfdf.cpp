@@ -75,6 +75,12 @@ private:
         cout << "\n\n";
     }
 
+public:
+
+    bool operator == (const Client& client) {
+        return (this->id == client.id && this->bankAccount == client.bankAccount && this->age == client.age && this->lastName == client.lastName && this->firstName == client.firstName);
+    }
+
 };
 
 int Client::lastId = 1;
@@ -92,7 +98,7 @@ public:
     ~Bank() {
         delete[] clients;
     }
-    
+
     void createClient(string firstName,
         string lastName,
         unsigned short age) {
@@ -140,6 +146,35 @@ public:
         this->clients = buf;
     }
 
+    void transaction(string senderBankAccount, string takerBankAccount, double value) {
+        int senderIndex = -1;
+        int takerIndex = -1;
+        for (int i = 0; i, size; i++) {
+            if (clients[i].bankAccount == senderBankAccount) {
+                if (clients[i].balance >= value) {
+                }
+                else {
+                    cout << "Error" << endl;
+                    return;
+                }
+            }
+            for (int i = 0; i, size; i++) {
+                if (clients[i].bankAccount == takerBankAccount) {
+                    takerIndex = i;
+                    break;
+                }
+                else {
+                    cout << "Error" << endl;
+                    return;
+                }
+            }
+        }
+        clients[senderIndex].balance -= value;
+        clients[takerIndex].balance += value;
+        cout << "complected" << endl;
+    }
+
+
 private:
 
     string createBankAccount() {
@@ -164,10 +199,21 @@ private:
 
 int main()
 {
+    srand(time(NULL));
     Bank bank("Tinkoff");
+    Bank bank("Sperbank");
     for (int i = 0; i < 200; i++)
     {
-    bank.createClient("Ben", "Tom", 18);
+        bank.createClient("Ben", "Tom", 18);
     }
     bank.ShowClients();
+
+    cout << "\n,\n";
+
+
+
+
+
+    cout << (Bank == Bank2);
+
 }
